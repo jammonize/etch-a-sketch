@@ -1,8 +1,37 @@
 <!DOCTYPE html>
 
 <html>
-<head>
-</head>
-<body>
-</body>
+    <head>
+    <title>Title</title>
+    <link rel="stylesheet" href="style.css" />
+    </head>
+    
+    <body>
+        <h1>Etch-a-Sketch</h1>
+        <div class="container">
+            
+
+        </div>
+    <script>
+        for (i = 0; i < 16; i++) {
+            let row = document.createElement('div');
+            row.className = "row"
+            document.querySelector('.container').appendChild(row);
+            for (j = 0; j < 16; j++) {
+                let cell = document.createElement('div');
+                cell.className = "cell";
+                row.appendChild(cell);
+            }
+        }
+
+        function color(e) {
+            if (e.target.className === "cell") {
+                e.target.style.background = "black";
+            }
+        }
+
+        document.addEventListener("mouseover", color);
+
+    </script>
+    </body>
 </html>
