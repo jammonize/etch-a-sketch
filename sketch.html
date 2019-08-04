@@ -2,35 +2,75 @@
 
 <html>
     <head>
-    <title>Title</title>
+    <title>Etch-a-Sketch</title>
     <link rel="stylesheet" href="style.css" />
     </head>
     
     <body>
-        <h1>Etch-a-Sketch</h1>
-        <div class="container">
-            
-
+        <div class = "nav">
+            <h1>Etch-a-Sketch</h1>
+            <button class="button" id="reset">Reset</button>
+            <button class="button" id="black">Black</button>
+            <button class="button" id="multi">Multicolor</button>
         </div>
+
+        <div class="container" id="container"></div>
+        </div>
+
     <script>
-        for (i = 0; i < 16; i++) {
-            let row = document.createElement('div');
-            row.className = "row"
-            document.querySelector('.container').appendChild(row);
-            for (j = 0; j < 16; j++) {
-                let cell = document.createElement('div');
-                cell.className = "cell";
-                row.appendChild(cell);
+
+        function createGrid(x) {
+            let gridSize = (960 / x)
+            for (i = 0; i < x; i++) {
+                let row = document.createElement('div');
+                row.className = "row"
+                container.appendChild(row);
+                for (j = 0; j < x; j++) {
+                    let cell = document.createElement('div');
+                    cell.className = "cell"
+                    cell.style.height = gridSize + "px";
+                    cell.style.width = gridSize + "px";
+                    row.appendChild(cell);
+                }
             }
         }
 
-        function color(e) {
+        function getRandomColor() {
+            let letters = '0123456789ABCDEF';
+            let color = '#';
+            for (var i=0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
+
+        function blackColor(e) {
+            document.removeEventListener("mouseover", multiColor)
+            document.addEventListener("mouseover", blackColor)
             if (e.target.className === "cell") {
                 e.target.style.background = "black";
             }
         }
+        
+        function multiColor(e) {
+            document.removeEventListener("mouseover", blackColor)
+            document.addEventListener("mouseover", multiColor)
+            if (e.target.className === "cell")
+                e.target.style.background = getRandomColor();
+            }
 
-        document.addEventListener("mouseover", color);
+        function resetGrid() {
+            container.innerHTML = '';
+            let x = prompt("What grid size would you like?", 16);
+            createGrid(x);
+        }
+
+        let container = document.getElementById('container');
+        document.getElementById("reset").addEventListener("click", resetGrid);
+        document.getElementById("multi").addEventListener("click", multiColor);
+        document.getElementById("black").addEventListener("click", blackColor);
+
+        createGrid(16);
 
     </script>
     </body>
